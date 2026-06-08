@@ -71,7 +71,7 @@ const Div = () => <div style={{ borderTop: '1px solid #1e1e1e', margin: '3px 0' 
 export type { AnimParams }
 
 export default function DebugPanel({ params, onChange, onReplay, isPlaying }: Props) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(() => window.innerWidth >= 768)
   const set = <K extends keyof AnimParams>(key: K, val: AnimParams[K]) =>
     onChange({ ...params, [key]: val })
 

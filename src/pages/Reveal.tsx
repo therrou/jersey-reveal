@@ -31,6 +31,13 @@ const DEFAULTS: AnimParams = {
 export default function Reveal() {
   const [params, setParams] = useState<AnimParams>(DEFAULTS)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
   const rafRef = useRef<number | null>(null)
   const startTimeRef = useRef<number>(0)
   const durRef = useRef(params.animDuration)
@@ -161,6 +168,35 @@ export default function Reveal() {
           pointerEvents: 'none',
         }}
       />
+
+      {/* ── Mobile replay CTA ────────────────────────────────────── */}
+      {isMobile && (
+        <button
+          onClick={replay}
+          disabled={isPlaying}
+          style={{
+            position: 'absolute',
+            bottom: 32,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 10,
+            background: 'transparent',
+            border: '1px solid rgba(255,255,255,0.4)',
+            color: '#fff',
+            fontSize: 11,
+            letterSpacing: '0.35em',
+            textTransform: 'uppercase',
+            padding: '12px 36px',
+            cursor: isPlaying ? 'default' : 'pointer',
+            fontFamily: 'inherit',
+            opacity: isPlaying ? 0.3 : 1,
+            transition: 'opacity 0.2s',
+            WebkitTapHighlightColor: 'transparent',
+          }}
+        >
+          {isPlaying ? '···' : '↺ Replay'}
+        </button>
+      )}
 
       {/* ── Debug panel — top-right ───────────────────────────────── */}
       <DebugPanel
