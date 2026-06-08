@@ -22,6 +22,8 @@ export default function Viewer() {
         modelBaseY={Math.PI}
         modelStartAngle={-0.6}
         modelEndAngle={-0.15}
+        metalness={0}
+        roughness={1}
       />
 
       {/* Header */}
