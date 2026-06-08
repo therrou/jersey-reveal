@@ -24,6 +24,7 @@ export default function Viewer() {
         modelEndAngle={-0.15}
         metalness={0}
         roughness={1}
+        modelScale={1}
       />
 
       {/* Header */}
