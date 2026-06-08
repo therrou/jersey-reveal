@@ -1,0 +1,11 @@
+Model Information:
+* title:	Camisa Internacional Retro Free
+* source:	https://sketchfab.com/3d-models/camisa-internacional-retro-free-b67a2c082f3d414ab50cd8f33a04a600
+* author:	Tulio Portela (https://sketchfab.com/TulioPortela)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Camisa Internacional Retro Free" (https://sketchfab.com/3d-models/camisa-internacional-retro-free-b67a2c082f3d414ab50cd8f33a04a600) by Tulio Portela (https://sketchfab.com/TulioPortela) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
