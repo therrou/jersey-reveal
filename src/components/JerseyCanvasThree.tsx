@@ -14,6 +14,7 @@ export interface JerseyCanvasProps {
   modelEndAngle: number
   metalness: number
   roughness: number
+  modelScale: number
 }
 
 interface Props extends JerseyCanvasProps {}
@@ -57,6 +58,7 @@ export default function JerseyCanvasThree(props: Props) {
 
     // ── Model ─────────────────────────────────────────────────────────
     let model: THREE.Object3D | null = null
+    let baseScale = 1
     const materials: THREE.MeshStandardMaterial[] = []
     const loader = new GLTFLoader()
 
@@ -85,9 +87,9 @@ export default function JerseyCanvasThree(props: Props) {
         const center = box.getCenter(new THREE.Vector3())
         const size = box.getSize(new THREE.Vector3())
         const isMobile = mount.clientWidth < 768
-        const scale = (isMobile ? 1.75 : 2.5) / Math.max(size.x, size.y, size.z)
-        model.scale.setScalar(scale)
-        model.position.sub(center.multiplyScalar(scale))
+        baseScale = (isMobile ? 1.75 : 2.5) / Math.max(size.x, size.y, size.z)
+        model.scale.setScalar(baseScale)
+        model.position.sub(center.multiplyScalar(baseScale))
 
         scene.add(model)
       },
@@ -118,10 +120,11 @@ export default function JerseyCanvasThree(props: Props) {
       pointLight.distance = p.lightDistance
       pointLight.decay = p.lightDecay
 
-      // Model rotation: startAngle → endAngle over progress
+      // Model rotation + scale
       if (model) {
         const angle = p.modelStartAngle + (p.modelEndAngle - p.modelStartAngle) * t
         model.rotation.y = p.modelBaseY + angle
+        model.scale.setScalar(baseScale * p.modelScale)
       }
 
       // Roughness + metalness — applied each frame so sliders respond instantly

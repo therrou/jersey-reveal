@@ -14,6 +14,9 @@ interface AnimParams {
   modelEndAngle: number
   metalness: number
   roughness: number
+  modelScale: number
+  fontSize: number
+  textTranslateY: number
   animDuration: number
   easing: string
   textRevealStart: number
@@ -21,6 +24,7 @@ interface AnimParams {
   textX: number
   fadeHeight: number
   fadeOpacity: number
+  fadePower: number
   playerName: string
   label: string
 }
@@ -181,15 +185,19 @@ export default function DebugPanel({ params, onChange, onReplay, isPlaying }: Pr
           <Row label="End Angle" value={params.modelEndAngle} min={-1.57} max={1.57} step={0.01} onChange={(v) => set('modelEndAngle', v)} />
           <Row label="Metalness" value={params.metalness} min={0} max={1} step={0.01} onChange={(v) => set('metalness', v)} />
           <Row label="Roughness" value={params.roughness} min={0} max={1} step={0.01} onChange={(v) => set('roughness', v)} />
+          <Row label="Model Scale" value={params.modelScale} min={0.3} max={2} step={0.01} onChange={(v) => set('modelScale', v)} />
 
           <Div />
 
           <Row label="Text Reveal At" value={params.textRevealStart} min={0} max={0.99} step={0.01} onChange={(v) => set('textRevealStart', v)} />
           <Row label="Text Y (%)" value={params.textY} min={0} max={60} step={0.5} onChange={(v) => set('textY', v)} />
           <Row label="Text X (%)" value={params.textX} min={-50} max={50} step={0.5} onChange={(v) => set('textX', v)} />
+          <Row label="Text Translate Y" value={params.textTranslateY} min={0} max={300} step={1} onChange={(v) => set('textTranslateY', v)} />
+          <Row label="Font Size (px)" value={params.fontSize} min={20} max={250} step={1} onChange={(v) => set('fontSize', v)} />
           <Div />
           <Row label="Fade Height (%)" value={params.fadeHeight} min={0} max={80} step={1} onChange={(v) => set('fadeHeight', v)} />
           <Row label="Fade Opacity" value={params.fadeOpacity} min={0} max={1} step={0.01} onChange={(v) => set('fadeOpacity', v)} />
+          <Row label="Fade Power" value={params.fadePower} min={0.1} max={6} step={0.05} onChange={(v) => set('fadePower', v)} />
 
           <Div />
 

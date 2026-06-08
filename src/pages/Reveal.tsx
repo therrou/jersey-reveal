@@ -17,6 +17,9 @@ const DEFAULTS: AnimParams = {
   modelEndAngle: -0.15,
   metalness: 0,
   roughness: 1,
+  modelScale: 1,
+  fontSize: 88,
+  textTranslateY: 80,
   animDuration: 0.7,
   easing: 'easeOutCubic',
   textRevealStart: 0.45,
@@ -24,6 +27,7 @@ const DEFAULTS: AnimParams = {
   textX: 0,
   fadeHeight: 28,
   fadeOpacity: 1,
+  fadePower: 1,
   playerName: 'OTHMAN',
   label: 'PREMIUM MEMBER',
 }
@@ -101,7 +105,7 @@ export default function Reveal() {
           flexDirection: 'column',
           alignItems: 'center',
           paddingTop: `${params.textY}%`,
-          transform: `translateX(${params.textX}%)`,
+          transform: `translateX(${params.textX}%) translateY(${(1 - rawText) * params.textTranslateY}px)`,
           opacity: textOpacity,
           clipPath,
           userSelect: 'none',
@@ -125,7 +129,7 @@ export default function Reveal() {
             fontFamily: 'Virage, sans-serif',
             fontWeight: 800,
             fontStyle: 'italic',
-            fontSize: 88,
+            fontSize: params.fontSize,
             color: '#fff',
             lineHeight: '100%',
             textTransform: 'uppercase',
@@ -152,6 +156,7 @@ export default function Reveal() {
           modelEndAngle={params.modelEndAngle}
           metalness={params.metalness}
           roughness={params.roughness}
+          modelScale={params.modelScale}
         />
       </div>
 
@@ -163,7 +168,14 @@ export default function Reveal() {
           left: 0,
           right: 0,
           height: `${params.fadeHeight}%`,
-          background: `linear-gradient(to bottom, rgba(10,21,40,0), rgba(10,21,40,${params.fadeOpacity}))`,
+          background: (() => {
+            const stops = Array.from({ length: 9 }, (_, i) => {
+              const t = i / 8
+              const a = (Math.pow(t, params.fadePower) * params.fadeOpacity).toFixed(3)
+              return `rgba(10,21,40,${a}) ${(t * 100).toFixed(0)}%`
+            })
+            return `linear-gradient(to bottom, ${stops.join(', ')})`
+          })(),
           zIndex: 3,
           pointerEvents: 'none',
         }}
