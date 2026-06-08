@@ -12,6 +12,8 @@ export interface JerseyCanvasProps {
   modelBaseY: number
   modelStartAngle: number
   modelEndAngle: number
+  metalness: number
+  roughness: number
 }
 
 interface Props extends JerseyCanvasProps {}
@@ -55,6 +57,7 @@ export default function JerseyCanvasThree(props: Props) {
 
     // ── Model ─────────────────────────────────────────────────────────
     let model: THREE.Object3D | null = null
+    const materials: THREE.MeshStandardMaterial[] = []
     const loader = new GLTFLoader()
 
     loader.load(
@@ -62,17 +65,17 @@ export default function JerseyCanvasThree(props: Props) {
       (gltf) => {
         model = gltf.scene
 
-        // Fully diffuse, matte — colour comes from texture, shading from PointLight only
         model.traverse((child) => {
           if (!(child instanceof THREE.Mesh)) return
           const mats = Array.isArray(child.material) ? child.material : [child.material]
           mats.forEach((mat) => {
             if (mat instanceof THREE.MeshStandardMaterial) {
-              mat.metalness = 0
-              mat.roughness = 1       // fully diffuse — no specular highlights
+              mat.roughnessMap = null   // let slider be authoritative
+              mat.metalnessMap = null   // let slider be authoritative
               mat.emissive.set(0, 0, 0)
               mat.emissiveIntensity = 0
               mat.needsUpdate = true
+              materials.push(mat)
             }
           })
         })
@@ -118,6 +121,12 @@ export default function JerseyCanvasThree(props: Props) {
       if (model) {
         const angle = p.modelStartAngle + (p.modelEndAngle - p.modelStartAngle) * t
         model.rotation.y = p.modelBaseY + angle
+      }
+
+      // Roughness + metalness — applied each frame so sliders respond instantly
+      for (const mat of materials) {
+        mat.roughness = p.roughness
+        mat.metalness = p.metalness
       }
 
       renderer.render(scene, camera)

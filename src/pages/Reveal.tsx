@@ -15,6 +15,8 @@ const DEFAULTS: AnimParams = {
   modelBaseY: Math.PI,
   modelStartAngle: -0.6,
   modelEndAngle: -0.15,
+  metalness: 0,
+  roughness: 1,
   animDuration: 0.7,
   easing: 'easeOutCubic',
   textRevealStart: 0.45,
@@ -141,6 +143,8 @@ export default function Reveal() {
           modelBaseY={params.modelBaseY}
           modelStartAngle={params.modelStartAngle}
           modelEndAngle={params.modelEndAngle}
+          metalness={params.metalness}
+          roughness={params.roughness}
         />
       </div>
 

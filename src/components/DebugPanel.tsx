@@ -12,6 +12,8 @@ interface AnimParams {
   modelBaseY: number
   modelStartAngle: number
   modelEndAngle: number
+  metalness: number
+  roughness: number
   animDuration: number
   easing: string
   textRevealStart: number
@@ -177,6 +179,8 @@ export default function DebugPanel({ params, onChange, onReplay, isPlaying }: Pr
           <Row label="Model Base Y" value={params.modelBaseY} min={0} max={6.28} step={0.01} onChange={(v) => set('modelBaseY', v)} />
           <Row label="Start Angle" value={params.modelStartAngle} min={-1.57} max={1.57} step={0.01} onChange={(v) => set('modelStartAngle', v)} />
           <Row label="End Angle" value={params.modelEndAngle} min={-1.57} max={1.57} step={0.01} onChange={(v) => set('modelEndAngle', v)} />
+          <Row label="Metalness" value={params.metalness} min={0} max={1} step={0.01} onChange={(v) => set('metalness', v)} />
+          <Row label="Roughness" value={params.roughness} min={0} max={1} step={0.01} onChange={(v) => set('roughness', v)} />
 
           <Div />
 
